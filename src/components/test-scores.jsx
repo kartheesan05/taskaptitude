@@ -32,24 +32,24 @@ export default function TestScoresComponent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-purple-50 p-8">
+    <div className="min-h-screen bg-blue-50 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-purple-800 mb-6">Your Test Scores</h1>
+        <h1 className="text-3xl font-bold text-blue-800 mb-6">Your Test Scores</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {testScores.map((test) => (
-            <Card key={test.subject} className="border-purple-200 shadow-md">
-              <CardHeader className="bg-purple-100 rounded-t-xl">
-                <CardTitle className="text-purple-800">{test.subject}</CardTitle>
+            <Card key={test.subject} className="border-blue-200 shadow-md">
+              <CardHeader className="bg-blue-100 rounded-t-xl">
+                <CardTitle className="text-blue-800">{test.subject}</CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-purple-700">Score: {test.score}</span>
-                  <span className="text-sm font-medium text-purple-600">Max: {test.maxScore}</span>
+                  <span className="text-sm font-medium text-blue-700">Score: {test.score}</span>
+                  <span className="text-sm font-medium text-blue-600">Max: {test.maxScore}</span>
                 </div>
                 <Progress
                   value={(test.score / test.maxScore) * 100}
-                  className="h-3 bg-purple-200"/>
-                <p className="text-right text-sm text-purple-700 mt-2">
+                  className="h-3 bg-blue-200"/>
+                <p className="text-right text-sm text-blue-700 mt-2">
                   {((test.score / test.maxScore) * 100).toFixed(1)}%
                 </p>
               </CardContent>
