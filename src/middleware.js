@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { decrypt } from "@/lib/session";
 import { cookies } from "next/headers";
 
-const protectedRoutes = ["/"];
+const protectedRoutes = ["/", "/result"];
 const publicRoutes = ["/login"];
 
 export default async function middleware(req) {
@@ -17,7 +17,6 @@ export default async function middleware(req) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  // Add this block to redirect logged-in users from /login to /
   if (path === "/login" && session?.email) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
