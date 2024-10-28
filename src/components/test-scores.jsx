@@ -30,11 +30,12 @@ export default function TestScoresComponent() {
     async function calculateScores() {
       try {
         const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions') || '{}');
+        const userDept = await getTestDepartment();
         // If selectedOptions is empty (no keys), set default scores
         if (Object.keys(selectedOptions).length === 0) {
           setTestScores([
             { subject: "Total Marks", score: 0, maxScore: 50 },
-            { subject: "Department", score: 0, maxScore: 20, department: "" },
+            { subject: "Department", score: 0, maxScore: 20, department: userDept },
             { subject: "Aptitude", score: 0, maxScore: 30 }
           ]);
           return;
@@ -85,7 +86,8 @@ export default function TestScoresComponent() {
                 <CardTitle className="text-black">
                   {test.subject}
                   {test.department && (
-                    <span className="block text-sm font-normal mt-1">
+                    <span>
+                      {" "}
                       ({test.department})
                     </span>
                   )}
