@@ -4,15 +4,30 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { getTestScores } from "@/lib/actions"
+import { useRouter } from "next/navigation"
 
 
 export default function TestScoresComponent() {
+  const router = useRouter();
   const [testScores, setTestScores] = useState([
     { subject: "Total Marks", score: 0, maxScore: 50 },
     { subject: "Department", score: 0, maxScore: 20 },
     { subject: "Aptitude", score: 0, maxScore: 30 }
   ]);
   const [error, setError] = useState(null);
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.clear();
+    // Clear any cookies
+    document.cookie.split(";").forEach((cookie) => {
+      document.cookie = cookie
+        .replace(/^ +/, "")
+        .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+    });
+    // Redirect to login
+    router.push("/login");
+  };
 
   useEffect(() => {
     async function calculateScores() {
@@ -41,7 +56,13 @@ export default function TestScoresComponent() {
 
   return (
     <div className="min-h-screen bg-blue-50 p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto relative">
+        <button
+          onClick={handleLogout}
+          className="absolute right-0 top-0 px-4 py-2 bg-blue-100 text-black rounded-xl hover:bg-blue-200 transition-colors border border-blue-200 shadow-sm"
+        >
+          Logout
+        </button>
         <h1 className="text-3xl font-bold text-black mb-6">Your Test Scores</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {testScores.map((test) => (
