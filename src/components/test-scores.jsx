@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { getTestScores } from "@/lib/actions"
+import { getTestScores, getTestDepartment } from "@/lib/actions"
 import { useRouter } from "next/navigation"
 
 
@@ -11,7 +11,7 @@ export default function TestScoresComponent() {
   const router = useRouter();
   const [testScores, setTestScores] = useState([
     { subject: "Total Marks", score: 0, maxScore: 50 },
-    { subject: "Department", score: 0, maxScore: 20 },
+    { subject: "Department", score: 0, maxScore: 20, department: "" },
     { subject: "Aptitude", score: 0, maxScore: 30 }
   ]);
   const [error, setError] = useState(null);
@@ -34,13 +34,22 @@ export default function TestScoresComponent() {
         if (Object.keys(selectedOptions).length === 0) {
           setTestScores([
             { subject: "Total Marks", score: 0, maxScore: 50 },
-            { subject: "Department", score: 0, maxScore: 20 },
+            { subject: "Department", score: 0, maxScore: 20, department: "" },
             { subject: "Aptitude", score: 0, maxScore: 30 }
           ]);
           return;
         }
         const scores = await getTestScores(selectedOptions);
-        setTestScores(scores);
+        const department = await getTestDepartment();
+        
+        // Merge the department info into the scores
+        const updatedScores = scores.map(score => 
+          score.subject === "Department" 
+            ? { ...score, department: department }
+            : score
+        );
+        
+        setTestScores(updatedScores);
       } catch (error) {
         setError('Failed to calculate scores. Please try again later.');
       }
@@ -73,7 +82,14 @@ export default function TestScoresComponent() {
           {testScores.map((test) => (
             <Card key={test.subject} className="border-blue-200 shadow-md">
               <CardHeader className="bg-blue-100 rounded-t-xl">
-                <CardTitle className="text-black">{test.subject}</CardTitle>
+                <CardTitle className="text-black">
+                  {test.subject}
+                  {test.department && (
+                    <span className="block text-sm font-normal mt-1">
+                      ({test.department})
+                    </span>
+                  )}
+                </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center mb-2">

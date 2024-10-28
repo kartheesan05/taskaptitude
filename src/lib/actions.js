@@ -91,6 +91,11 @@ export async function getTestQuestions() {
   return questionData;
 }
 
+export async function getTestDepartment() {
+  const questionData = await getTestQuestions();
+  return questionData.department;
+}
+
 export async function fetchQuestions({ page, section }) {
   try {
     const questionData = await getTestQuestions();
