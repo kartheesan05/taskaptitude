@@ -16,7 +16,7 @@ connection = psycopg2.connect(
 cursor = connection.cursor()
 
 # Insert 200 random questions into the dep_questions table
-for _ in range(300):
+for _ in range(2400):
     question = fake.sentence(nb_words=10)  # Generate a random question
     options = [fake.word() for _ in range(4)]  # Generate four random options
     # Randomly select the correct answer index
@@ -27,7 +27,7 @@ for _ in range(300):
     # Insert question and answers into the database
     cursor.execute(
         """
-        INSERT INTO aptitude_questions (question, option_a, option_b, option_c, option_d, correct_answer)
+        INSERT INTO dep_questions (question, option_a, option_b, option_c, option_d, correct_answer)
         VALUES (%s, %s, %s, %s, %s, %s)
         """,
         (question, options[0], options[1],

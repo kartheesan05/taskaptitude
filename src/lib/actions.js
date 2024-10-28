@@ -40,22 +40,33 @@ export async function login(state, formData) {
     return { errors: "servererror" };
   }
 
-  redirect("/");
+  redirect("/starttest");
 }
 
-function generateRandomIds(count, max) {
+function getDepartmentOffset(department) {
+  const departments = [
+    "CSE", "AIDS", "ECE", "EEE", "IT", "MECH", "CHEM", "BIOTECH", "MECHAUTO"
+  ];
+  const index = departments.indexOf(department);
+  if (index === -1) throw new Error("Invalid department");
+  return index * 200;
+}
+
+function generateRandomIds(count, max, offset = 0) {
   const ids = new Set();
   while (ids.size < count) {
-    ids.add(Math.floor(Math.random() * max) + 1);
+    ids.add(offset + (Math.floor(Math.random() * max) + 1));
   }
   return Array.from(ids);
 }
 
-export async function initializeTestQuestions() {
-  const depIds = generateRandomIds(20, 200);
+export async function initializeTestQuestions(department) {
+  const departmentOffset = getDepartmentOffset(department);
+  const depIds = generateRandomIds(20, 200, departmentOffset);
   const aptIds = generateRandomIds(30, 300);
   
   const questionData = {
+    department,
     depQuestionIds: depIds,
     aptQuestionIds: aptIds
   };

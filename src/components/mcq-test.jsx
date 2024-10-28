@@ -45,7 +45,7 @@ export default function McqTest() {
             </CardTitle>
             <Button
               onClick={handleSubmit}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-blue-800 hover:bg-blue-900 text-white"
             >
               Submit Test
             </Button>
@@ -113,14 +113,14 @@ export default function McqTest() {
               {currentPage === totalPages ? (
                 <Button
                   onClick={handleSubmit}
-                  className="w-24 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="w-24 bg-blue-800 hover:bg-blue-900 text-white"
                 >
                   Submit
                 </Button>
               ) : (
                 <Button
                   onClick={handleNextPage}
-                  className="w-24 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="w-24 bg-blue-800 hover:bg-blue-900 text-white"
                 >
                   Next
                 </Button>
