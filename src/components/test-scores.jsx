@@ -17,15 +17,12 @@ export default function TestScoresComponent() {
   const [error, setError] = useState(null);
 
   const handleLogout = () => {
-    // Clear localStorage
     localStorage.clear();
-    // Clear any cookies
     document.cookie.split(";").forEach((cookie) => {
       document.cookie = cookie
         .replace(/^ +/, "")
         .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
     });
-    // Redirect to login
     router.push("/login");
   };
 
