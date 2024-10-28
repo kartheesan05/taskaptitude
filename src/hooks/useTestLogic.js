@@ -34,7 +34,6 @@ export function useTestLogic() {
         });
         setQuestions(fetchedQuestions);
       } catch (error) {
-        console.error("Error loading questions:", error);
       } finally {
         setLoading(false);
       }
@@ -83,7 +82,6 @@ export function useTestLogic() {
       setIsSubmitDialogOpen(false);
       router.push("/result");
     } catch (error) {
-      console.error("Error saving test answers:", error);
     }
   };
 

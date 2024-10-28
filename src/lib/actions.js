@@ -16,7 +16,6 @@ export async function login(state, formData) {
   });
 
   if (!validatedFields.success) {
-    console.log("invalid fields");
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
@@ -112,7 +111,6 @@ export async function fetchQuestions({ page, section }) {
 
     return questions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
     throw new Error("Failed to fetch questions");
   }
 }
@@ -130,7 +128,6 @@ async function fetchCorrectAnswers(questionIds, questionType) {
 
     return result.rows;
   } catch (error) {
-    console.error("Error fetching correct answers:", error);
     throw new Error("Failed to fetch correct answers");
   }
 }
@@ -172,7 +169,6 @@ export async function getTestScores(selectedOptions) {
       { subject: "Aptitude", score: aptScore, maxScore: 30 },
     ];
   } catch (error) {
-    console.error("Error computing test scores:", error);
     throw new Error("Failed to compute test scores");
   }
 }
@@ -200,11 +196,9 @@ export async function saveTestAnswers(selectedOptions) {
       [JSON.stringify(formattedAnswers), email]
     );
 
-    console.log(formattedAnswers);
 
     return true;
   } catch (error) {
-    console.error("Error saving test answers:", error);
     throw new Error("Failed to save test answers");
   }
 }

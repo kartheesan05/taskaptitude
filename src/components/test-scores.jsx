@@ -30,10 +30,18 @@ export default function TestScoresComponent() {
     async function calculateScores() {
       try {
         const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions') || '{}');
+        // If selectedOptions is empty (no keys), set default scores
+        if (Object.keys(selectedOptions).length === 0) {
+          setTestScores([
+            { subject: "Total Marks", score: 0, maxScore: 50 },
+            { subject: "Department", score: 0, maxScore: 20 },
+            { subject: "Aptitude", score: 0, maxScore: 30 }
+          ]);
+          return;
+        }
         const scores = await getTestScores(selectedOptions);
         setTestScores(scores);
       } catch (error) {
-        console.error('Error calculating scores:', error);
         setError('Failed to calculate scores. Please try again later.');
       }
     }
