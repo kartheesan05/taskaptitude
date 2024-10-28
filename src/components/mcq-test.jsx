@@ -30,6 +30,7 @@ export default function McqTest() {
     handleSubmit,
     confirmSubmit,
     setIsSubmitDialogOpen,
+    isSubmitting,
   } = useTestLogic();
 
   return (
@@ -46,8 +47,16 @@ export default function McqTest() {
             <Button
               onClick={handleSubmit}
               className="bg-blue-800 hover:bg-blue-900 text-white"
+              disabled={isSubmitting}
             >
-              Submit Test
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit Test"
+              )}
             </Button>
           </CardHeader>
           <CardContent className="pt-6">
@@ -114,8 +123,16 @@ export default function McqTest() {
                 <Button
                   onClick={handleSubmit}
                   className="w-24 bg-blue-800 hover:bg-blue-900 text-white"
+                  disabled={isSubmitting}
                 >
-                  Submit
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               ) : (
                 <Button

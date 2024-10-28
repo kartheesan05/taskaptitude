@@ -13,6 +13,7 @@ export function useTestLogic() {
     [TEST_CONFIG.SECTIONS.APTITUDE]: {},
   });
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const totalPages = Math.ceil(TEST_CONFIG.TOTAL_QUESTIONS / TEST_CONFIG.QUESTIONS_PER_PAGE);
@@ -77,12 +78,12 @@ export function useTestLogic() {
   const handleSubmit = () => setIsSubmitDialogOpen(true);
 
   const confirmSubmit = async () => {
+    setIsSubmitting(true);
     try {
       await saveTestAnswers(selectedOptions);
       setIsSubmitDialogOpen(false);
       router.push("/result");
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return {
@@ -99,5 +100,6 @@ export function useTestLogic() {
     handleSubmit,
     confirmSubmit,
     setIsSubmitDialogOpen,
+    isSubmitting,
   };
 }

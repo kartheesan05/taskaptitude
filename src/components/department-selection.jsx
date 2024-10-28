@@ -23,6 +23,8 @@ import {
 
 export default function DepartmentSelection() {
   const [department, setDepartment] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("") // Add error state
   const router = useRouter()
 
   const departments = [
@@ -30,19 +32,23 @@ export default function DepartmentSelection() {
   ]
 
   const handleLogout = () => {
-    // Clear all cookies
     document.cookie.split(";").forEach((cookie) => {
       document.cookie = cookie
         .replace(/^ +/, "")
         .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
     })
-    // Redirect to login page
     router.push("/login")
   }
 
   const handleStartTest = async () => {
-    await initializeTestQuestions(department)
-    router.push("/")
+    setIsLoading(true)
+    setError("") // Clear any previous errors
+    try {
+      await initializeTestQuestions(department)
+      router.push("/")
+    } catch (error) {
+      setError("Failed to start the test. Please try again.") // Set error message
+    }
   }
 
   return (
@@ -57,6 +63,9 @@ export default function DepartmentSelection() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {error && ( // Add error message display
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
           <div className="space-y-2">
             <label
               htmlFor="department"
@@ -80,9 +89,9 @@ export default function DepartmentSelection() {
         <CardFooter className="flex flex-col space-y-4">
           <Button
             className="w-full bg-blue-800 hover:bg-blue-900 text-white"
-            disabled={!department}
+            disabled={!department || isLoading}
             onClick={handleStartTest}>
-            Start Test
+            {isLoading ? "Loading..." : "Start Test"}
           </Button>
           <Button
             variant="ghost"
