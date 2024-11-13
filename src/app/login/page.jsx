@@ -15,24 +15,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/actions";
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+// import { useFormStatus } from "react-dom";
 
-function LoginButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type="submit"
-      className="w-full bg-blue-800 hover:bg-blue-900 text-white"
-      disabled={pending}
-    >
-      {pending ? "Logging in..." : "Login"}
-    </Button>
-  );
-}
+// function LoginButton() {
+//   const { pending } = useFormStatus();
+//   return (
+//     <Button
+//       type="submit"
+//       className="w-full bg-blue-800 hover:bg-blue-900 text-white"
+//       disabled={pending}
+//     >
+//       {pending ? "Logging in..." : "Login"}
+//     </Button>
+//   );
+// }
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [state, formAction] = useActionState(login, {});
+  const [state, formAction, loginPending] = useActionState(login, {});
 
   const handleSubmit = async (formData) => {
     await formAction(formData);
@@ -102,7 +102,13 @@ export default function LoginPage() {
                   : state.errors}
               </div>
             )}
-            <LoginButton />
+            <Button
+              type="submit"
+              className="w-full bg-blue-800 hover:bg-blue-900 text-white"
+              disabled={loginPending}
+            >
+              {loginPending ? "Logging in..." : "Login"}
+            </Button>
             {/* <div className="text-sm text-center text-gray-600">
               Don't have an account?{""}
               <a href="#" className="text-blue-800 hover:underline">

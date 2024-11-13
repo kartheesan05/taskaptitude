@@ -45,7 +45,7 @@ export async function login(state, formData) {
 
 function getDepartmentOffset(department) {
   const departments = [
-    "CSE", "AIDS", "ECE", "EEE", "IT", "MECH", "CHEM", "BIOTECH", "MECHAUTO"
+    "CSE", "AIDS", "ECE", "EEE", "IT", "MECH"
   ];
   const index = departments.indexOf(department);
   if (index === -1) throw new Error("Invalid department");

@@ -28,7 +28,7 @@ export default function DepartmentSelection() {
   const router = useRouter()
 
   const departments = [
-    "CSE", "AIDS", "ECE", "EEE", "IT", "MECH", "CHEM", "BIOTECH", "MECHAUTO"
+    "CSE", "AIDS", "ECE", "EEE", "IT", "MECH"
   ]
 
   const handleLogout = () => {
