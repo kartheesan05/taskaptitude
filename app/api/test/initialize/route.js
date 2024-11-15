@@ -1,15 +1,14 @@
-import { NextRequest } from "next/server";
 import { encrypt } from "@/lib/session";
 import { cookies } from "next/headers";
 
-function getDepartmentOffset(department: string) {
+function getDepartmentOffset(department) {
   const departments = ["CSE", "AIDS", "ECE", "EEE", "IT", "MECH"];
   const index = departments.indexOf(department);
   if (index === -1) throw new Error("Invalid department");
   return index * 200;
 }
 
-function generateRandomIds(count: number, max: number, offset = 0) {
+function generateRandomIds(count, max, offset = 0) {
   const ids = new Set();
   while (ids.size < count) {
     ids.add(offset + (Math.floor(Math.random() * max) + 1));
@@ -17,7 +16,7 @@ function generateRandomIds(count: number, max: number, offset = 0) {
   return Array.from(ids);
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const { department } = await request.json();
     

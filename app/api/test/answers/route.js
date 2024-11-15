@@ -1,9 +1,8 @@
-import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
 import db from "@/lib/db";
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const selectedOptions = await request.json();
     

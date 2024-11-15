@@ -1,9 +1,8 @@
-import { NextRequest } from "next/server";
-import { decrypt } from "@/lib/session";
 import { cookies } from "next/headers";
+import { decrypt } from "@/lib/session";
 import db from "@/lib/db";
 
-export async function GET(request: NextRequest) {
+export async function GET(request) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
@@ -18,7 +17,7 @@ export async function GET(request: NextRequest) {
     const questionData = await decrypt(encryptedData);
     const questionIds = (section === "department" 
       ? questionData.depQuestionIds 
-      : questionData.aptQuestionIds) as number[];
+      : questionData.aptQuestionIds);
 
     const questionsPerPage = 5;
     const startIndex = (page - 1) * questionsPerPage;
